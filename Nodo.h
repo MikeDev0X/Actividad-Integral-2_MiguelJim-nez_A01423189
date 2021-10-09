@@ -6,53 +6,43 @@ using namespace std;
 
 class Nodo{
   private:
+  //atributos
   Registro registro;
   Nodo *sig;
   
   public:
   Nodo(Registro,Nodo*);
   Nodo(Registro);
-  ~Nodo();
   //getters
   Registro getDato();
   Nodo* getSig();
   //setters
   void setDato(Registro);
   void setSig(Nodo *);
-  //impirimir
-  void imprimirDato();
 };
 
-#include "Nodo.h"
-
-Nodo::Nodo(Registro _registro, Nodo *sig_){
+Nodo::Nodo(Registro _registro, Nodo *sig_){//constructor con objeto y nodo
   registro=_registro;
   sig=sig_;
 }
 
-Nodo::Nodo(Registro dato_){
+Nodo::Nodo(Registro dato_){//constructor con objeto
   registro=dato_;
   sig=NULL;
 }
 
-Nodo::~Nodo(){}
-
-Registro Nodo::getDato(){
+Registro Nodo::getDato(){//regresa el objeto
   return registro;
 }
 
-Nodo* Nodo::getSig(){
+Nodo* Nodo::getSig(){//regresa el siguiente nodo
   return sig;
 }
 
-void Nodo::setDato(Registro dato_){
+void Nodo::setDato(Registro dato_){//modifica el dato_
   registro=dato_;
 }
 
-void Nodo::setSig(Nodo *sig_){
+void Nodo::setSig(Nodo *sig_){//modifica el nodo siguiente
   sig=sig_;
-}
-
-void Nodo::imprimirDato(){
-  cout<<"El dato del nodo es: "<<registro<<", la dirección al nodo siguiente es: "<<sig<<endl;
 }
