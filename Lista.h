@@ -17,11 +17,9 @@ class Lista{
   void insertaIncicio(Registro);
   void insertaFinal(Registro);
   void insertaOrden(Registro);
-  //void borrarDato(Registro);
-  //void imprimeLista();
 
   int longitudLista();//Te regresa el tamaño en entero de la lista
-  //vector<Barco> buscaeEnLista(string);
+  vector<Registro> buscaEnLista(string,int,string);
 
   bool operator<(Registro);
   bool operator<=(Registro);
@@ -33,11 +31,6 @@ class Lista{
   Nodo* head;
 };
 
-
-#include "Lista.h"
-//print(hello world);
-
-using namespace std;
 
 Lista::Lista(){
   head=NULL;
@@ -111,35 +104,40 @@ void Lista::insertaOrden(Registro n){ // inserta un dato nuevo en orden, recibe 
     }
   }
 }
-/*
-int Lista::buscaeEnLista(int num){ // busca un dato dentro de la lista, recibe un numero entero, regresa un entero
-  int cat=0;
+
+vector<Registro> Lista::buscaEnLista(string croppedUBI, int year, string month){ 
+  string cropped="", regMonth="";
+  int regYear=0;
+
+  vector<Registro> reg;
+
   if(head == NULL){ // caso si la lista esta vacia
-    cout<<"La Lista esta vacía"<<endl;
-   return -1;
+    cout<<"The list is empty"<<endl;
+   return reg;
   }
+
   else{ // hay elementos en la lista
     Nodo *nuevo = head;
-    while(nuevo != NULL && nuevo->getDato() != num){ // while para recorrer la lista
+    while(nuevo != NULL){ // while para recorrer la lista
+      cropped=nuevo->getDato().getCroppedUBI(); 
+      regMonth=nuevo->getDato().getMonth(); 
+      regYear=nuevo->getDato().getYear(); 
+
+      if(cropped==croppedUBI && regMonth==month && regYear==year){
+        reg.push_back(nuevo->getDato());
+      }
+
       nuevo = nuevo->getSig();
-      cat++;
-    }
-    if(nuevo == NULL){ // el dato solicitado no existe
-      cout << "No se encontró el valor buscado" << endl;
-      return -1;
-    }
-    else{ // el dato solicitado existe
-      cout<< "Se encontró"<<endl;
-      return cat;
     }
   }
+  return reg;
 }
-*/
+
 
 
 int Lista::longitudLista(){//Te regresa el tamaño en entero de la lista
   if(head == NULL){//Caso en que esté vacía la lista
-    cout<<"La Lista esta vacía"<<endl;
+    cout<<"The list is empty"<<endl;
     return 0;
   }
   else{//Caso donde hay un elemento al menos
@@ -152,49 +150,6 @@ int Lista::longitudLista(){//Te regresa el tamaño en entero de la lista
     return contador;//regresa el contador de elementos final
   }
 }
-/*
-void Lista::borrarDato(Registro num){ // recibe un numero entero, lo busca dentro de la lista y lo borra 
-  if(head == NULL){
-    cout<<"La lista esta vacía"<<endl;
-  }
-  else{
-    Nodo *aux1=head,*aux2=head;
-    while(aux2 != NULL && aux2->getDato() != num){
-      aux1=aux2;
-      aux2= aux2-> getSig();
-    }
-    if(aux2 == NULL){
-      cout<<"No se encontró dicho dato"<<endl;
-    }
-    else if(aux1== aux2){
-      head = head->getSig();
-      delete aux2;
-    }
-    else{
-      aux1->setSig(aux2->getSig());
-      delete aux2;
-    }
-  }
-}
-*/
-/*
-void Lista::imprimeLista(){
-  Nodo* current_nodo=head;
-  while(true){
-      Registro reg;
-      if(current_nodo->getSig()==NULL){
-        reg=current_nodo->getDato();
-        cout<<reg<<endl;
-        break;
-      }
-      else{
-        reg=current_nodo->getDato();
-        cout<<reg<<endl;
-        current_nodo=current_nodo->getSig();
-      }
-    }
-}*/
-
 
 ostream& operator<<(ostream& salida,  Lista& lis){
   salida << "|| Contenido de la lista ligada||"<<"\n"<< "==========================="<<endl; 

@@ -19,6 +19,7 @@ class Registro{
     string getDayString();
     string getYearString();
     int getMonthIndex();
+    string getCroppedUBI();
 
     //Modificadores
     void setDay(int);
@@ -34,8 +35,6 @@ class Registro{
     bool operator<(Registro);
     bool operator<=(Registro);
     bool operator>(Registro);
-    bool operator!=(string);
-    bool operator==(string);
 
   private:
     //variables privadas
@@ -87,6 +86,13 @@ int Registro::getMonthIndex(){
   return MonthIndex;
 } 
 
+string Registro::getCroppedUBI(){
+  string crp;
+  for(int g=0;g<3;g++){
+    crp+=ubi[g];
+  }
+  return crp;
+}
 //Modificadores
 void Registro::setDay(int day){this->day=day;}
 void Registro::setMonth(string month){this->month=month;}
@@ -182,7 +188,6 @@ bool Registro :: operator>(Registro reg){//sobrecarga de operador >
     return false;
   }
 }
-
 
 //sobrecarga de operador << para imprimir un objeto de tipo Registro
 std :: ostream& operator<<(std :: ostream& salida, Registro& reg){

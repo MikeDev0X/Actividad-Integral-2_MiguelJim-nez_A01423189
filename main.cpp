@@ -63,7 +63,7 @@ void ReadFile(Lista &listaM, Lista &listaR, string dataFile, vector<int> &sorted
   void validateFiles(Lista &listaM, Lista &listaR, string dataFile, vector<int> &sortedYears)
   {//Función para proporcionar el nombre del archivo en el cual se va a buscar
     while (true){
-      cout<<"Ingrese el nombre del archivo: "; cin>>dataFile;
+      cout<<"Enter the file name: "; cin>>dataFile;
       cout<<endl;
       ReadFile(listaM,listaR,dataFile,sortedYears);
 
@@ -71,45 +71,81 @@ void ReadFile(Lista &listaM, Lista &listaR, string dataFile, vector<int> &sorted
         break;
       }
       else{//continuar el ciclo si el archivo no existe o no tiene datos
-        cout<<"El archivo no contiene datos o no existe, intente nuevamente"<<endl;
+        cout<<"The file is empty or doesn't exist, try again"<<endl;
       }
     }
   }
 
-  void UBIComparison(string cropped, Lista &listaM, Lista &listaR, vector<int> &sortedYears )
+  void UBIComparison(string &cropped, Lista &listaM, Lista &listaR, vector<int> &sortedYears )
   {//función para comparar un substring de 3 caracteres con un UBI (string de un objeto Registro)
 
     cout<<"--------------------------------"<<endl;
-    cout<<"Ingrese los primeros tres caracteres de UBI: ";  
+    cout<<"Enter the first 3 caracters of the UBI: ";  
     cin>>cropped; 
     cout<<"--------------------------------"<<endl;
-    
+
+    vector<string> meses={"jan","feb","mar","apr","may","jun","jul", "aug","sep","oct","nov","dec"};
+
     int mCounter=0, rCounter=0;
+    bool gatoControl= false,perroControl=false;
 
-    for(int t=0; t<sortedYears.size();t++){
+    for(int t=0; t<sortedYears.size();t++){ 
+      for(int u=0;u<12;u++){
+        mCounter=((listaM.buscaEnLista(cropped, sortedYears[t], meses[u])).size());
+        rCounter=((listaR.buscaEnLista(cropped, sortedYears[t], meses[u])).size());
+        
+        if(mCounter>0 || rCounter>0){
+          gatoControl = true;perroControl=true;
+        }
+      }
 
+      if(perroControl){cout<<"<month> <year> <M> <R>"<<endl;}
 
-      
+      for(int u=0;u<12;u++){
+        mCounter=((listaM.buscaEnLista(cropped, sortedYears[t], meses[u])).size());
+        rCounter=((listaR.buscaEnLista(cropped, sortedYears[t], meses[u])).size());
+        
+        if (gatoControl == true){
+          
+          cout<<"  "<<meses[u]<<"     "<<sortedYears[t]<<"    "<<mCounter<<"   "<<rCounter<<endl;
+        }
+      }
+
+      if(gatoControl){
+        cout<<endl;
+      }
+      gatoControl = false; perroControl=false;
+
+      mCounter=0;
+      rCounter=0;
+
     }
-
-
   }
-
 
 int main() {
   Lista listaM;
   Lista listaR;
   string dataFile="",cropped="";
+  string mainOption="";
   vector<int> sortedYears;
 
   validateFiles(listaM,listaR,dataFile,sortedYears);
 
-  //cout<<listaM<<endl;
-  //cout<<listaR<<endl;
-  
-  for(int z=0; z<sortedYears.size();z++){cout<<sortedYears[z]<<endl;}
+  while(true){
+    string UpperOption="";
 
+    cout<<"Main: "<<endl;
+    cout<<"A: Search for UBI Coincidences"<<endl;
+    cout<<"B: Exit"<<endl; cin>>mainOption; cout<<endl;
 
+    for(int z=0;z<mainOption.size();z++){
+      UpperOption+=toupper(mainOption[z]);
+    }
 
-
+    if(UpperOption=="A"){
+      UBIComparison(cropped,listaM,listaR,sortedYears);
+    }
+    else if(UpperOption=="B"){break;}
+    else{cout<<"Incorrect option, try again"<<endl; continue;}
+  }
 }
