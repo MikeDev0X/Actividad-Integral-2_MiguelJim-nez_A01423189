@@ -19,7 +19,7 @@ class Lista{
   void insertaOrden(Registro);
 
   int longitudLista();//Te regresa el tamaño en entero de la lista
-  vector<Registro> buscaEnLista(string,int,string);
+  int buscaEnLista(string,int,string);
 
   bool operator<(Registro);
   bool operator<=(Registro);
@@ -105,15 +105,16 @@ void Lista::insertaOrden(Registro n){ // inserta un dato nuevo en orden, recibe 
   }
 }
 
-vector<Registro> Lista::buscaEnLista(string croppedUBI, int year, string month){ 
+int Lista::buscaEnLista(string croppedUBI, int year, string month){ 
   string cropped="", regMonth="";
   int regYear=0;
+  int counter=0;
 
   vector<Registro> reg;
 
   if(head == NULL){ // caso si la lista esta vacia
     cout<<"The list is empty"<<endl;
-   return reg;
+   return 0;
   }
 
   else{ // hay elementos en la lista
@@ -124,13 +125,14 @@ vector<Registro> Lista::buscaEnLista(string croppedUBI, int year, string month){
       regYear=nuevo->getDato().getYear(); 
 
       if(cropped==croppedUBI && regMonth==month && regYear==year){
-        reg.push_back(nuevo->getDato());
+        //reg.push_back(nuevo->getDato());
+        counter++;
       }
 
       nuevo = nuevo->getSig();
     }
   }
-  return reg;
+  return counter;
 }
 
 
